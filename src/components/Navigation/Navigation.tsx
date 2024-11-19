@@ -44,6 +44,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 const Navigation = () => {
   const { userData, setUserData } = useContext(AuthContext);
@@ -78,9 +79,13 @@ const Navigation = () => {
             <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
               <MonetizationOnIcon /> Sell
             </Button>
-            <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
+            <Button component={Link} to="/cart" color="inherit" data-testid="cart-button">
               <ShoppingCartIcon />
               Cart
+            </Button>
+            <Button component={Link} to="/orders" color="inherit" data-testid="order-button">
+              <ReceiptLongIcon />
+              Orders
             </Button>
           </Box>
         </Typography>

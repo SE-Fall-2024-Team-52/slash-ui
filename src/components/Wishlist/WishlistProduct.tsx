@@ -39,20 +39,10 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
 import { AuthContext } from "../../ContextWrapper";
-import {
-  Container,
-  Typography,
-  Alert,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  IconButton,
-  Box,
-} from "@mui/material";
+import { Container, Typography, Alert, List, ListItem, ListItemAvatar, Avatar, ListItemText, IconButton, Box, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import { Product } from "../SearchPage/SearchProduct";
 
 interface WishlistItem {
   id: number;
@@ -68,12 +58,9 @@ const Wishlist: React.FC = () => {
   const { userData } = useContext(AuthContext);
   const [error, setError] = useState("");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchWishlist = async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:5000/api/wishlist/${userData?.username}`
-      );
+      const response = await axios.get(`http://127.0.0.1:5000/api/wishlist/${userData?.username}`);
       if (response.data) {
         setWishlist(response.data);
         setError("");
@@ -96,9 +83,26 @@ const Wishlist: React.FC = () => {
     }
   };
 
+  const addToCart = async (item: WishlistItem) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:5000/api/cart`, {
+        item,
+        username: userData?.username,
+      });
+      if (response.status === 200) {
+        alert("Item added to cart successfully!");
+      }
+      handleRemove(item.id);
+      fetchWishlist();
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert("Failed to add item to cart.");
+    }
+  };
+
   useEffect(() => {
     fetchWishlist();
-  }, [fetchWishlist]);
+  }, []);
 
   return (
     <Container className="wishlist-container">
@@ -121,30 +125,21 @@ const Wishlist: React.FC = () => {
                 primary={item.title}
                 secondary={
                   <>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      color="textPrimary"
-                    >
+                    <Typography component="span" variant="body2" color="textPrimary">
                       Price: {item.price}
                     </Typography>
                     <br />
-                    <Link
-                      to={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link to={item.link} target="_blank" rel="noopener noreferrer">
                       View Product
                     </Link>
                   </>
                 }
               />
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleRemove(item.id)}
-                >
+                <Button sx={{ marginRight: "5px" }} variant="contained" color="secondary" onClick={() => addToCart(item)}>
+                  Add to Cart
+                </Button>
+                <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.id)}>
                   <DeleteIcon />
                 </IconButton>
               </Box>

@@ -53,7 +53,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-interface Product {
+export interface Product {
   title: string;
   price: string;
   link: string;
@@ -111,6 +111,21 @@ const SearchProducts: React.FC = () => {
     }
   };
 
+  const addToCart = async (item: Product) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:5000/api/cart`, {
+        item,
+        username: userData?.username,
+      });
+      if (response.status === 200) {
+        alert("Item added to cart successfully!");
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert("Failed to add item to cart.");
+    }
+  };
+
   return (
     <div className="main-container">
       <TextField
@@ -123,12 +138,7 @@ const SearchProducts: React.FC = () => {
       />
       <FormControl variant="outlined">
         <InputLabel>Currency</InputLabel>
-        <Select
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-          label="Currency"
-          data-testid="currency-input"
-        >
+        <Select value={currency} onChange={(e) => setCurrency(e.target.value)} label="Currency" data-testid="currency-input">
           <MenuItem value="USD($)">USD($)</MenuItem>
           <MenuItem value="EUR(€)">EUR(€)</MenuItem>
           <MenuItem value="JPY(¥)">JPY(¥)</MenuItem>
@@ -154,12 +164,7 @@ const SearchProducts: React.FC = () => {
         onChange={(e) => setMaxPrice(Number(e.target.value))}
         data-testid="maxprice-input"
       />
-      <Button
-        data-testid="search-button"
-        variant="contained"
-        color="primary"
-        onClick={handleSearch}
-      >
+      <Button data-testid="search-button" variant="contained" color="primary" onClick={handleSearch}>
         Search
       </Button>
 
@@ -178,11 +183,7 @@ const SearchProducts: React.FC = () => {
                   primary={result.title}
                   secondary={
                     <>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
+                      <Typography component="span" variant="body2" color="textPrimary">
                         Price: {result.price}
                       </Typography>
                       <br />
@@ -190,12 +191,12 @@ const SearchProducts: React.FC = () => {
                         View Product
                       </Link>
                       <br />
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => addToWishlist(result)}
-                      >
+                      <Button variant="contained" color="secondary" onClick={() => addToWishlist(result)}>
                         Add to Wishlist
+                      </Button>
+
+                      <Button sx={{ marginLeft: "5px" }} variant="contained" color="secondary" onClick={() => addToCart(result)}>
+                        Add to Cart
                       </Button>
                     </>
                   }
