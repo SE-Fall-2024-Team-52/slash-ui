@@ -39,6 +39,11 @@ import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../ContextWrapper";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import SearchIcon from "@mui/icons-material/Search";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Navigation = () => {
   const { userData, setUserData } = useContext(AuthContext);
@@ -58,48 +63,30 @@ const Navigation = () => {
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              component={Link}
-              to="/"
-              color="inherit"
-              data-testid="home-button"
-            >
+            <Button component={Link} to="/" color="inherit" data-testid="home-button">
+              <HomeIcon />
               Home
             </Button>
-            <Button
-              component={Link}
-              to="/search"
-              color="inherit"
-              data-testid="search-button"
-            >
+            <Button component={Link} to="/search" color="inherit" data-testid="search-button">
+              <SearchIcon />
               Search
             </Button>
-            <Button
-              component={Link}
-              to="/wishlist"
-              color="inherit"
-              data-testid="wishlist-button"
-            >
+            <Button component={Link} to="/wishlist" color="inherit" data-testid="wishlist-button">
+              <ListAltIcon />
               Wishlist
             </Button>
-            <Button
-              component={Link}
-              to="/sell"
-              color="inherit"
-              data-testid="sell-button"
-            >
-              Sell
+            <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
+              <MonetizationOnIcon /> Sell
+            </Button>
+            <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
+              <ShoppingCartIcon />
+              Cart
             </Button>
           </Box>
         </Typography>
         {userData ? (
           <React.Fragment>
-            <Typography
-              color="textPrimary"
-              variant="overline"
-              component="div"
-              fontStyle="italic"
-            >
+            <Typography color="textPrimary" variant="overline" component="div" fontStyle="italic">
               logged in as: {userData.username}
             </Typography>
             <Button color="inherit" onClick={logout}>
