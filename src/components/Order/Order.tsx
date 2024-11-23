@@ -1,3 +1,42 @@
+/**
+ * Order component displays a list of grouped orders fetched from the backend API.
+ * It organizes orders by `order_id` and provides detailed information for each order item.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Order />
+ * )
+ *
+ * @returns {JSX.Element} The rendered Order component.
+ *
+ * @remarks
+ * This component utilizes the `AuthContext` to retrieve the logged-in user's data
+ * and fetches the orders from a backend API using Axios. Orders are grouped by `order_id`
+ * for better visualization. Each order displays its date, item details, and links to product pages.
+ *
+ * @typedef {Object} OrderItem
+ * @property {number} id - The unique identifier of the order item.
+ * @property {string} title - The title of the product in the order.
+ * @property {string} order_id - The identifier for the order to which the item belongs.
+ * @property {string} date - The date when the order was placed.
+ * @property {string} price - The price of the product in the order.
+ * @property {string} link - The link to the product page.
+ * @property {string} website - The website where the product is listed.
+ * @property {string} img_link - The image link of the product in the order.
+ *
+ * @state {OrderItem[]} order - The list of order items fetched from the API.
+ * @state {string} error - The error message to display if fetching data fails.
+ *
+ * @function fetchOrder - Fetches the order data from the backend API.
+ * @function groupOrdersById - Groups order items by their `order_id`.
+ *
+ * @requires axios
+ * @requires @mui/material
+ * @requires react-router-dom
+ * @requires ./style.css
+ * @requires ../../ContextWrapper
+ */
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
