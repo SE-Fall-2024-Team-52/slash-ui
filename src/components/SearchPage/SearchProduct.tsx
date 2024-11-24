@@ -59,6 +59,7 @@ export interface Product {
   link: string;
   website: string;
   img_link: string;
+  posted_by: string;
 }
 
 const SearchProducts: React.FC = () => {
@@ -187,6 +188,11 @@ const SearchProducts: React.FC = () => {
                         Price: {result.price}
                       </Typography>
                       <br />
+                      {result.posted_by && (
+                        <><Typography component="span" variant="body2" color="textPrimary">
+                          Posted By: {result.posted_by}
+                        </Typography><br /></>
+                      )}
                       <Link to={result.link} target="_blank" rel="noopener">
                         View Product
                       </Link>
