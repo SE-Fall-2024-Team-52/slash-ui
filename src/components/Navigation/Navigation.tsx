@@ -68,16 +68,18 @@ const Navigation = () => {
               <HomeIcon />
               Home
             </Button>
-            <Button component={Link} to="/search" color="inherit" data-testid="search-button">
+            {userData && (userData.role === "buyer" ? 
+            (<Button component={Link} to="/search" color="inherit" data-testid="search-button">
               <SearchIcon />
               Search
-            </Button>
+            </Button>) : (
+              <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
+              <MonetizationOnIcon /> Sell
+            </Button> )
+            )}
             <Button component={Link} to="/wishlist" color="inherit" data-testid="wishlist-button">
               <ListAltIcon />
               Wishlist
-            </Button>
-            <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
-              <MonetizationOnIcon /> Sell
             </Button>
             <Button component={Link} to="/cart" color="inherit" data-testid="cart-button">
               <ShoppingCartIcon />
