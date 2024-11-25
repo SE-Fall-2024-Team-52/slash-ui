@@ -36,6 +36,7 @@ import {
   Typography,
   TextField,
   Button,
+  MenuItem,
 } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useState } from "react";
@@ -75,7 +76,8 @@ const RegisterPage: React.FC = () => {
         role,
       })
       .then((res: any) => {
-        if (res.data.content.status === "success") {
+        if (res.data.content.status === "success") {   
+          alert("Register successful!");
           console.log("Login successful!");
           setUserData(res.data.content.data as UserData);
           if(role === "buyer"){
@@ -186,11 +188,18 @@ const RegisterPage: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <label htmlFor="role">Role:</label>
-          <select name="role" value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="buyer">Buyer</option>
-            <option value="seller">Seller</option>
-          </select>
+          <TextField
+            select
+            label="Select Role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          >
+            <MenuItem value="buyer">Buyer</MenuItem>
+            <MenuItem value="seller">Seller</MenuItem>
+          </TextField>
           <Button
             data-testid="submit"
             type="submit"
