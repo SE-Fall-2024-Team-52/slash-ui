@@ -41,10 +41,6 @@ const LoginPage = () => {
   const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Username:", username);
@@ -52,10 +48,17 @@ const LoginPage = () => {
     axios
       .post("http://localhost:5000/login", { username, password })
       .then((res: any) => {
-        if (res.data.content.status === "success") {
+        if (res.data.content.status === "success") {   
+          console.log(res.data.content)
+          alert("Login successful!");
           console.log("Login successful!");
           setUserData(res.data.content.data as UserData);
-          navigate("/search");
+          if(res.data.content.data.role === "buyer"){
+            navigate("/search");
+          }
+          else if(res.data.content.data.role === "seller"){
+            navigate("/sell");
+          }
         }
       });
   };

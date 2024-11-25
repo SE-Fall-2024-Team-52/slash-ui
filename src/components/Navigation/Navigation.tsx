@@ -50,10 +50,6 @@ const Navigation = () => {
   const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   const logout = () => {
     setUserData(undefined);
     navigate("/");
@@ -63,20 +59,19 @@ const Navigation = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>            
+            <>{userData && console.log(userData, userData.role)}</>
             <Button component={Link} to="/" color="inherit" data-testid="home-button">
               <HomeIcon />
               Home
             </Button>
             {userData && (userData.role === "buyer" ? 
-            (<Button component={Link} to="/search" color="inherit" data-testid="search-button">
+            (
+            <>
+              <Button component={Link} to="/search" color="inherit" data-testid="search-button">
               <SearchIcon />
               Search
-            </Button>) : (
-              <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
-              <MonetizationOnIcon /> Sell
-            </Button> )
-            )}
+            </Button>            
             <Button component={Link} to="/wishlist" color="inherit" data-testid="wishlist-button">
               <ListAltIcon />
               Wishlist
@@ -89,6 +84,11 @@ const Navigation = () => {
               <ReceiptLongIcon />
               Orders
             </Button>
+            </>) : (
+              <Button component={Link} to="/sell" color="inherit" data-testid="sell-button">
+              <MonetizationOnIcon /> Sell
+            </Button> )
+            )}
           </Box>
         </Typography>
         {userData ? (
