@@ -18,7 +18,8 @@
 import React from "react";
 import SlashRouter from "./SlashRouter";
 import Navigation from "./components/Navigation/Navigation";
-export const AuthContext = React.createContext<{
+export const 
+AuthContext = React.createContext<{
   userData: UserData | undefined;
   setUserData: (newData: UserData | undefined) => void;
 }>({ userData: undefined, setUserData: (temp) => {} });
@@ -28,6 +29,7 @@ export type UserData = {
   firstName: string;
   lastName: string;
   email: string;
+  role: string;
 };
 
 export default function ContextWrapper() {

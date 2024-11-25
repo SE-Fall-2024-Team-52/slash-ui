@@ -48,6 +48,7 @@ const RegisterPage: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("buyer")
   const [confirmPassword, setConfirmPassword] = useState("");
   const { setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -58,6 +59,12 @@ const RegisterPage: React.FC = () => {
       alert("Passwords do not match");
       return;
     }
+    console.log(username,
+      password,
+      email,
+      firstName,
+      lastName,
+      role)
     axios
       .post("http://localhost:5000/register", {
         username,
@@ -65,12 +72,18 @@ const RegisterPage: React.FC = () => {
         email,
         firstName,
         lastName,
+        role,
       })
       .then((res: any) => {
         if (res.data.content.status === "success") {
           console.log("Login successful!");
           setUserData(res.data.content.data as UserData);
-          navigate("/search");
+          if(role === "buyer"){
+            navigate("/search");
+          }
+          else if(role === "seller"){
+            navigate("/sell");
+          }
         }
       });
   };
@@ -173,6 +186,11 @@ const RegisterPage: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <label htmlFor="role">Role:</label>
+          <select name="role" value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
           <Button
             data-testid="submit"
             type="submit"
