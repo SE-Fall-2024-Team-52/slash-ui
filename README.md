@@ -51,7 +51,7 @@ Slash is a publicly accessible web API framework that allows one to scrape the m
 :movie_camera: Checkout our video
 ---
 
-[[https://www.youtube.com/watch?v=ijOOYHe2Ywc]](https://www.youtube.com/watch?v=ijOOYHe2Ywc)
+[![Watch the video](https://img.youtube.com/vi/TFDly5E1LxE/maxresdefault.jpg)](https://youtu.be/TFDly5E1LxE)
 
 
 ---
